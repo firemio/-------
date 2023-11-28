@@ -1,5 +1,5 @@
 import tomllib
-# import json
+import json
 
 def main():
     input_file = 'fan2310.txt'  # 入力ファイル名
@@ -33,9 +33,8 @@ def main():
 
     # Writing each part to a separate file
     for i, part in enumerate(split_dicts):
-        with open(f'{output_file}_{i+1}.txt', 'w', encoding='utf-8') as file:
-            for d in part:
-                file.write(str(d) + '\n')
+        with open(f'{output_file}_{i+1}.json', 'w', encoding='utf-8') as file:
+            json.dump(part, file, indent=4, ensure_ascii=False)
 
 
 # Function to split a list of dictionaries into 5 parts
