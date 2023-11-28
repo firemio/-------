@@ -1,5 +1,5 @@
 import tomllib
-import json
+# import json
 
 def main():
     input_file = 'fan2310.txt'  # 入力ファイル名
