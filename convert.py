@@ -3,10 +3,17 @@ import json
 
 def main():
     input_file = 'fan2310.txt'  # 入力ファイル名
-    output_file = 'fan2310.json'  # 出力ファイル名
+    output_file = 'fan2310'  # 出力ファイル名
 
     with open(input_file, 'r', encoding='shift_jis') as file:
         lines = file.readlines()
+
+
+    table = str.maketrans({
+        '\u3000': '',
+        ' ': '',
+        '\t': ''
+    })
 
     results = []
     for line in lines:
@@ -16,18 +23,25 @@ def main():
             name = d[0]
             length = d[1]
             value = line[start:start+length]
+            value = value.translate(table)			#全角スペース等を削除
             result[name] = value
             start += length
         results.append(result)
 
-    json_data = json.dumps(result, indent=4, ensure_ascii=False)
 
-    # # ファイルに書き込み
-    # with open("output.txt", "w", encoding='utf-8') as file:
-    #     file.write(json_data)
-    # JSON形式で書き込み
-    with open(output_file, 'w', encoding='utf-8') as f:
-        json.dump(results, f, ensure_ascii=False)
+    split_dicts = list(split_list_of_dicts(results))
+
+    # Writing each part to a separate file
+    for i, part in enumerate(split_dicts):
+        with open(f'{output_file}_{i+1}.txt', 'w', encoding='utf-8') as file:
+            for d in part:
+                file.write(str(d) + '\n')
+
+
+# Function to split a list of dictionaries into 5 parts
+def split_list_of_dicts(lst, n=5):
+    k, m = divmod(len(lst), n)
+    return (lst[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n))
 
 
 data = [
