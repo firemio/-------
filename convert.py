@@ -3,7 +3,7 @@ import json
 
 def main():
     input_file = 'fan2310.txt'  # 入力ファイル名
-    output_file = 'fan2210.json'  # 出力ファイル名
+    output_file = 'fan2310.json'  # 出力ファイル名
 
     with open(input_file, 'r', encoding='shift_jis') as file:
         lines = file.readlines()
